@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>user</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<div class="container">
+    <form action="/edit-user" method="POST" enctype="multipart/form-data"> 
+        <h2> Edit user</h2>
+        <input type="hidden" name="id" value="<%= users[0]?.id %>"  > 
+        <label for="name"> Name : </label> <br/>  
+        <input type="text" name="name" value="<%= users[0]?.name %>" > <br/>     
+        <label for="age"> Age : </label> <br/>  
+        <input type="text" name="age" value="<%= users[0]?.age %>" > <br/>    
+        <label for="phone"> phone number : </label> <br/>  
+        <input type="text" name="phone" value="<%= users[0]?.phone %>" > <br/>
+        <label for="email"> email address : </label> <br/>  
+        <input type="text" name="email" value="<%= users[0]?.email %>" > <br/> 
+
+        <label> Image : </label> <br/> 
+
+        <div  class="image-box" id="filepreview">
+            <% if (users[0].image) { %>
+                <img src="/uploads/<%= users[0]?.image %>" id="preview" width="120">
+            <% } else { %>
+                <img src="https://via.placeholder.com/100" alt="No Image"id="preview" width="120" >
+            <% } %>
+        </div>
+        <label for="image" id="filename"  class="label-for-image">
+            <% if (users[0].image) { %>
+            <%= users[0]?.image %>
+            <% } else { %>
+                    + Add image 
+            <% } %>
+        </label>
+        <input type="file" id="image" name="image" accept="image/png, image/gif, image/jpeg" style="position: absolute; visibility: hidden;"  >
+
+        <br/> <br/> 
+        <input type="submit" value="Save" class="submitbtn">
+    </form>
+</div>
+</body>
+</html>
+
+<script>
+    document.getElementById('image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('filename').innerHTML = this.files.item(0).name; 
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('preview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

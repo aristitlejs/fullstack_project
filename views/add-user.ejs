@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>user</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<div class="container">
+    <form action="/add-user" method="POST" enctype="multipart/form-data" > 
+        <h2>Add user</h2>
+        <label for="name"> Name : </label> <br/>  
+        <input type="text" name="name"> <br/>     
+        <label for="age"> Age : </label> <br/>  
+        <input type="text" name="age"> <br/>    
+        <label for="phone"> phone number : </label> <br/>  
+        <input type="text" name="phone"> <br/>
+        <label for="email"> email address : </label> <br/>  
+        <input type="text" name="email"> <br/> 
+   
+        <label> Image : </label> <br/> 
+
+        <div  class="image-box" id="filepreview">
+            <img src="" id="preview" width="100" >
+        </div>
+        <label for="image" id="filename"  class="label-for-image">
+             + Add image 
+        </label>
+
+        <input type="file" id="image" name="image" accept="image/png, image/gif, image/jpeg" style="position: absolute; visibility: hidden;"  >
+
+        <br/> <br/> 
+        <input type="submit" value="Save" class="submitbtn">
+    </form>
+</div>
+</body>
+</html>
+
+
+<script>
+    document.getElementById('image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('filename').innerHTML = this.files.item(0).name; 
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('preview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
